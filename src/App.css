@@ -26,7 +26,10 @@ body {
   float: left;
 }
 
-.tst img{
+.toggle-theme{
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
   margin-top: 90px;
   float: right;
 }
@@ -55,17 +58,18 @@ input {
 }
 
 .list {
-  padding: 10px;
-  border-bottom: 1px solid rgb(255, 255, 255);
+  width: 100%;
 }
 
 .list li{
-  padding: 4px;
+  padding: 20px;
+  margin-left: -40px;
+  width: 100%;
   list-style: none;
-  border-bottom: 1px solid rgb(255, 255, 255);
 }
 
 .bottom-section {
+  margin-top: -10px;
   border-radius: 6px;
   background-color: hsl(235, 24%, 19%);
   display: flex;
