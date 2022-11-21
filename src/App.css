@@ -57,11 +57,11 @@ input {
   border-radius: 6px;
 }
 
-.list {
+.list-wrapper {
   width: 100%;
 }
 
-.list li{
+.list-wrapper #list{
   padding: 20px;
   margin-left: -40px;
   width: 100%;

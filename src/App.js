@@ -4,6 +4,8 @@ import backgroundLight from '../src/images/bg-desktop-light.jpg'
 import sun from '../src/images/icon-sun.svg'
 import moon from '../src/images/icon-moon.svg'
 import { useState } from 'react';
+import TodoInput from './components/TodoInput';
+import TodoList from './components/TodoList';
 
 function App() {
   const [todo, setTodo] = useState("");
@@ -56,42 +58,11 @@ function App() {
           backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
             'hsl(235, 24%, 19%)'
         }}>
-          <div class="input-section"
-          style={{
-            backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
-              'hsl(235, 24%, 19%)'
-          }}>
-            <button onClick={addTodo}>Add</button>
-            <input 
-            name="todo"
-            value={todo}
-            placeholder="Create a new ToDo" 
-            onChange={(e) => {
-              setTodo(e.target.value);
-            }}
-            style={{
-              backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
-                'hsl(235, 24%, 19%)'
-            }}>
-            </input>
-          </div>
-          <div class="list">
-            <ul>
-              {todos.map((todo, index) => (
-                <div>
-                <li key={index}
-                style={{
-                  borderBottom: themeSwitch === true ? '1px solid  hsl(235, 21%, 11%)' :
-                    '1px solid hsl(0, 0%, 98%)'
-                }}> {todo} </li> 
 
-                <button onClick={() => {
-                  deleteTodo(todo);
-                }}>Delete</button>
-                </div>
-              ))}
-            </ul>
-          </div>
+          <TodoInput todo={todo} setTodo={setTodo} addTodo={addTodo} themeSwitch={themeSwitch} />
+
+          <TodoList todos={todos} deleteTodo={deleteTodo} themeSwitch={themeSwitch} />
+
           <div class="bottom-section" style={{
             backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
               'hsl(235, 24%, 19%)'
@@ -101,7 +72,7 @@ function App() {
               <button style={{
                 border: themeSwitch === true ? 'none' :
                   'none',
-                  color: themeSwitch === true ? 'black' :
+                color: themeSwitch === true ? 'black' :
                   ''
               }}>
                 All
@@ -109,7 +80,7 @@ function App() {
               <button style={{
                 border: themeSwitch === true ? 'none' :
                   'none',
-                  color: themeSwitch === true ? 'black' :
+                color: themeSwitch === true ? 'black' :
                   ''
               }}>
                 Active
@@ -117,20 +88,20 @@ function App() {
               <button style={{
                 border: themeSwitch === true ? 'none' :
                   'none',
-                  color: themeSwitch === true ? 'black' :
+                color: themeSwitch === true ? 'black' :
                   ''
               }}>
                 Completed
               </button>
             </div>
             <button style={{
-                border: themeSwitch === true ? 'none' :
-                  'none',
-                  color: themeSwitch === true ? 'black' :
-                  ''
-              }}>
-                Clear Completed
-                </button>
+              border: themeSwitch === true ? 'none' :
+                'none',
+              color: themeSwitch === true ? 'black' :
+                ''
+            }}>
+              Clear Completed
+            </button>
           </div>
         </div>
       </div>
