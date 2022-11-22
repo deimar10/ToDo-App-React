@@ -11,6 +11,7 @@ function App() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
   const [themeSwitch, setThemeSwitch] = useState(false);
+  const [checked, setChecked] = useState([]);
   let imageURL = "";
 
   const addTodo = () => {
@@ -28,6 +29,16 @@ function App() {
     });
     setTodos(newTodos);
   }
+
+  const handleCheck = (event) => {
+  var updatedList = [...checked];
+    if (event.target.checked) {
+      updatedList = [...checked, event.target.value];
+    } else {
+      updatedList.splice(checked.indexOf(event.target.value), 1);
+    }
+    setChecked(updatedList);
+  };
 
   if (themeSwitch === true) {
     imageURL = moon;
@@ -58,10 +69,9 @@ function App() {
           backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
             'hsl(235, 24%, 19%)'
         }}>
-
           <TodoInput todo={todo} setTodo={setTodo} addTodo={addTodo} themeSwitch={themeSwitch} />
 
-          <TodoList todos={todos} deleteTodo={deleteTodo} themeSwitch={themeSwitch} />
+          <TodoList todos={todos} deleteTodo={deleteTodo} themeSwitch={themeSwitch} checked={checked} handleCheck={handleCheck} />
 
           <div class="bottom-section" style={{
             backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
