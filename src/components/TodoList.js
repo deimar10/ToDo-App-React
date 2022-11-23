@@ -1,7 +1,7 @@
 import '../App.css';
 import { useMemo } from 'react';
 
-const TodoList = ({ todos, deleteTodo, themeSwitch, handleCheck, category }) => {
+const TodoList = ({ todo, todos, deleteTodo, themeSwitch, handleCheck, category }) => {
 
   const handleFilter = () => {
     if (category === 'completed') {
@@ -28,7 +28,9 @@ const TodoList = ({ todos, deleteTodo, themeSwitch, handleCheck, category }) => 
               type="checkbox" 
               onChange={e => handleCheck(e, index)} 
             />   
-            <li> {todo.activity} </li> 
+            <li  style={{
+                textDecoration: todo.completed === true ? 'line-through' : 'none'
+              }} > {todo.activity} </li> 
             <button onClick={() => {
               deleteTodo(todo);
             }}>Delete

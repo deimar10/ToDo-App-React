@@ -18,7 +18,11 @@ function App() {
   let imageURL = "";
 
   const addTodo = () => {
-    setTodos([...todos, todo])
+    if (todo.activity !== "") {
+      setTodos([...todos, todo])
+    } else {
+      alert("Cant add a empty todo!")
+    }
   };
 
   const deleteTodo = (text) => {
@@ -26,21 +30,26 @@ function App() {
       return todo !== text;
     });
     setTodos(newTodos);
+  };
+
+  const deleteCompleted = () => {
+    const clearTodos = todos.filter((todo) => 
+      todo.completed === false
+    );
+    setTodos(clearTodos);
   }
 
   const handleCheck = (event, index) => {
     setTodos((prev) => {
       const updatedTodo = prev.map((obj, objIndex) => {
         if (index === objIndex) {
-          return {...obj, completed : true};
+          return {...obj, completed : !obj.completed};
         }
         return obj;
       });
       return updatedTodo;
     });
   };
-  console.log(todos)
-  console.log(category)
 
   if (themeSwitch === true) {
     imageURL = moon;
@@ -73,7 +82,7 @@ function App() {
         }}>
           <TodoInput todo={todo} setTodo={setTodo} addTodo={addTodo} themeSwitch={themeSwitch} />
 
-          <TodoList todos={todos} deleteTodo={deleteTodo} themeSwitch={themeSwitch} handleCheck={handleCheck} category={category} />
+          <TodoList todo={todo} todos={todos} deleteTodo={deleteTodo} themeSwitch={themeSwitch} handleCheck={handleCheck} category={category} />
 
           <div class="bottom-section" style={{
             backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
@@ -106,7 +115,11 @@ function App() {
                 Completed
               </button>
             </div>
-            <button name="clear" onClick={e => setCategory(e.target.name)} style={{
+            <button name="clear" onClick={e => setCategory(e.target.name)}
+            onClick={() => {
+              deleteCompleted();
+            }}
+             style={{
               border: themeSwitch === true ? 'none' :
                 'none',
               color: themeSwitch === true ? 'black' :
