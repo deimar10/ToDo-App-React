@@ -1,23 +1,38 @@
 import '../App.css';
+import { useMemo } from 'react';
 
-const TodoList = ({ todos, deleteTodo, themeSwitch, checked, handleCheck }) => {
+const TodoList = ({ todos, deleteTodo, themeSwitch, handleCheck, category }) => {
 
-  const isChecked = (todo) => 
-  checked.includes(todo) ? "checked-item" : "not-checked-item";
+  const handleFilter = () => {
+    if (category === 'completed') {
+      return todos.filter((todo) => todo.completed);
+    }
+    if (category === 'active') {
+      return todos.filter((todo) => !todo.completed)
+    }
+    return todos;
+  }
+
+  let filterTodos = useMemo(handleFilter, [category, todos])
 
     return (
         <div class="list-wrapper">
         <ul>
-          {todos.map((todo, index) => (
+          {filterTodos.map((todo, index) => (
             <div id="list" style={{
                 borderBottom: themeSwitch === true ? '1px solid  hsl(235, 21%, 11%)' :
                   '1px solid hsl(0, 0%, 98%)'
-              }}>
-            <input value={todo} type="checkbox" onChange={handleCheck} />   
-            <li key={index} className={isChecked(todo)}> {todo} </li> 
+              }} key={index}>
+            <input 
+              value={todo.completed} 
+              type="checkbox" 
+              onChange={e => handleCheck(e, index)} 
+            />   
+            <li> {todo.activity} </li> 
             <button onClick={() => {
               deleteTodo(todo);
-            }}>Delete</button>
+            }}>Delete
+            </button>
             </div>
           ))}
         </ul>

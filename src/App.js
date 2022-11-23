@@ -8,19 +8,17 @@ import TodoInput from './components/TodoInput';
 import TodoList from './components/TodoList';
 
 function App() {
-  const [todo, setTodo] = useState("");
+  const [todo, setTodo] = useState({
+    activity: '',
+    completed: false
+  });
   const [todos, setTodos] = useState([]);
   const [themeSwitch, setThemeSwitch] = useState(false);
-  const [checked, setChecked] = useState([]);
+  const [category, setCategory] = useState("");
   let imageURL = "";
 
   const addTodo = () => {
-    if (todo !== "") {
-      setTodos([...todos, todo]);
-      setTodo("");
-    } else {
-      alert("Cant add a empty todo!")
-    }
+    setTodos([...todos, todo])
   };
 
   const deleteTodo = (text) => {
@@ -30,15 +28,19 @@ function App() {
     setTodos(newTodos);
   }
 
-  const handleCheck = (event) => {
-  var updatedList = [...checked];
-    if (event.target.checked) {
-      updatedList = [...checked, event.target.value];
-    } else {
-      updatedList.splice(checked.indexOf(event.target.value), 1);
-    }
-    setChecked(updatedList);
+  const handleCheck = (event, index) => {
+    setTodos((prev) => {
+      const updatedTodo = prev.map((obj, objIndex) => {
+        if (index === objIndex) {
+          return {...obj, completed : true};
+        }
+        return obj;
+      });
+      return updatedTodo;
+    });
   };
+  console.log(todos)
+  console.log(category)
 
   if (themeSwitch === true) {
     imageURL = moon;
@@ -71,7 +73,7 @@ function App() {
         }}>
           <TodoInput todo={todo} setTodo={setTodo} addTodo={addTodo} themeSwitch={themeSwitch} />
 
-          <TodoList todos={todos} deleteTodo={deleteTodo} themeSwitch={themeSwitch} checked={checked} handleCheck={handleCheck} />
+          <TodoList todos={todos} deleteTodo={deleteTodo} themeSwitch={themeSwitch} handleCheck={handleCheck} category={category} />
 
           <div class="bottom-section" style={{
             backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
@@ -79,7 +81,7 @@ function App() {
           }}>
             <p id="count">{todos.length} Items Left</p>
             <div id="btns">
-              <button style={{
+              <button name="all" onClick={e => setCategory(e.target.name)} style={{
                 border: themeSwitch === true ? 'none' :
                   'none',
                 color: themeSwitch === true ? 'black' :
@@ -87,7 +89,7 @@ function App() {
               }}>
                 All
               </button>
-              <button style={{
+              <button name="active" onClick={e => setCategory(e.target.name)} style={{
                 border: themeSwitch === true ? 'none' :
                   'none',
                 color: themeSwitch === true ? 'black' :
@@ -95,7 +97,7 @@ function App() {
               }}>
                 Active
               </button>
-              <button style={{
+              <button name="completed" onClick={e => setCategory(e.target.name)} style={{
                 border: themeSwitch === true ? 'none' :
                   'none',
                 color: themeSwitch === true ? 'black' :
@@ -104,7 +106,7 @@ function App() {
                 Completed
               </button>
             </div>
-            <button style={{
+            <button name="clear" onClick={e => setCategory(e.target.name)} style={{
               border: themeSwitch === true ? 'none' :
                 'none',
               color: themeSwitch === true ? 'black' :

@@ -1,5 +1,10 @@
 
 const TodoInput = ({ todo, setTodo, addTodo, themeSwitch }) => {
+
+  const handleChange = (e) => {
+    setTodo({...todo, activity : e.target.value});
+  }
+
     return (
         <div class="input-section"
         style={{
@@ -8,11 +13,8 @@ const TodoInput = ({ todo, setTodo, addTodo, themeSwitch }) => {
         }}>
           <input 
             name="todo"
-            value={todo}
             placeholder="Create a new ToDo" 
-            onChange={(e) => {
-              setTodo(e.target.value);
-            }}
+            onChange={handleChange}
             style={{
               backgroundColor: themeSwitch === true ? 'hsl(236, 33%, 92%)' :
                 'hsl(235, 24%, 19%)'
